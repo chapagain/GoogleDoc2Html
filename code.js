@@ -181,8 +181,10 @@ function processText(item, output) {
       var startPos = indices[i];
       var endPos = i+1 < indices.length ? indices[i+1]: text.length;
       var partText = text.substring(startPos, endPos);
-
-      Logger.log(partText);
+      
+      // Logger.log(partAtts);
+      // Logger.log(partText);
+      // Logger.log(partText.trim().indexOf('http://'));
 
       if (partAtts.ITALIC) {
         output.push('<i>');
@@ -200,8 +202,11 @@ function processText(item, output) {
       if (partText.indexOf('[')==0 && partText[partText.length-1] == ']') {
         output.push('<sup>' + partText + '</sup>');
       }
-      else if (partText.trim().indexOf('http://') == 0) {
+      /*else if (partText.trim().indexOf('http://') == 0) {
         output.push('<a href="' + partText + '" rel="nofollow">' + partText + '</a>');
+      }*/
+      else if (partAtts.LINK_URL) {
+        output.push('<a href="' + partAtts.LINK_URL + '" rel="nofollow">' + partText + '</a>');
       }
       else {
         output.push(partText);
